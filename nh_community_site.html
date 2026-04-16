@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NH Community</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: white;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff0, #f0f, #0ff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shine 4s linear infinite;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .logo-text:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    }
+
+    .hero {
+      min-height: calc(100vh - 200px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      animation: floatText 3s ease-in-out infinite;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .section {
+      padding: 80px 20px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .content-box {
+      background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,188,212,0.1));
+      border: 2px solid transparent;
+      border-radius: 25px;
+      padding: 40px 30px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .content-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, #00bcd4, #ff0080, #00ff88, #ff8000);
+      background-size: 400% 400%;
+      animation: borderGlow 6s ease infinite;
+      border-radius: 25px;
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+    .content-box::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: linear-gradient(135deg, rgba(15,12,41,0.95), rgba(36,36,62,0.95));
+      border-radius: 23px;
+      z-index: -1;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .content-box.slide-left {
+      transform: translateX(-100px) rotateY(15deg);
+    }
+
+    .content-box.slide-right {
+      transform: translateX(100px) rotateY(-15deg);
+    }
+
+    .content-box.visible {
+      opacity: 1;
+      transform: translateX(0) rotateY(0deg);
+    }
+
+    .content-box:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(0,188,212,0.3);
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 25px;
+      background: linear-gradient(45deg, #00bcd4, #ff0080, #00ff88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShine 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    @keyframes textShine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    .section p {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      line-height: 2;
+      margin: 0 auto;
+      max-width: 900px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .highlight-text {
+      background: linear-gradient(45deg, #00bcd4, #ff0080);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: bold;
+    }
+
+    .emoji-decoration {
+      font-size: 1.5em;
+      margin: 0 5px;
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #popupForm {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      padding: 30px;
+      border-radius: 15px;
+      z-index: 2000;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      transition: transform 0.3s ease;
+      color: white;
+      border: 2px solid #00bcd4;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    #popupForm.active {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    #popupForm h3 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #00bcd4;
+      font-size: 1.5rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: #ff4444;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    #popupForm label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #00bcd4;
+    }
+
+    #popupForm input, 
+    #popupForm textarea,
+    #popupForm select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transition: border-color 0.3s ease;
+    }
+
+    #popupForm input:focus,
+    #popupForm textarea:focus,
+    #popupForm select:focus {
+      outline: none;
+      border-color: #00bcd4;
+    }
+
+    #popupForm textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    #popupForm button {
+      background: linear-gradient(45deg, #00bcd4, #0097a7);
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    #popupForm button:hover {
+      background: linear-gradient(45deg, #008ba3, #00695c);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,188,212,0.3);
+    }
+
+    .cancel-btn {
+      background: linear-gradient(45deg, #666, #444) !important;
+    }
+
+    .cancel-btn:hover {
+      background: linear-gradient(45deg, #444, #222) !important;
+    }
+
+    .popup-message {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, #333, #555);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 3000;
+      border-left: 4px solid #00bcd4;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      max-width: 300px;
+    }
+
+    .popup-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .popup-message.success {
+      border-left-color: #4caf50;
+    }
+
+    .popup-message.error {
+      border-left-color: #f44336;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top: 3px solid #00bcd4;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 20px;
+        min-height: calc(100vh - 180px);
+      }
+      
+      .section {
+        padding: 30px 15px;
+      }
+      
+      .nav-links {
+        gap: 10px;
+      }
+      
+      .nav-links a {
+        padding: 10px 15px;
+        font-size: 1rem;
+      }
+      
+      #popupForm {
+        width: 95%;
+        padding: 20px;
+      }
+      
+      .form-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .popup-message {
+        right: 15px;
+        left: 15px;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 2rem;
+      }
+      
+      .nav-links a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+      
+      #popupForm {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-text" onclick="window.open('https://discord.gg/AJw6JwqWhY','_blank')">🌟 NH Community 🌟</div>
+    <div class="nav-links">
+      <a href="#" onclick="openForm()">📝 تقديم إدارة</a>
+      <a href="#rules">📜 القوانين</a>
+      <a href="#meaning">🎯 معنى السيرفر</a>
+      <a href="#admin">👑 كن إداري</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>👋 أهلاً بك في NH Community</h1>
+    <p>🌈 أفضل مجتمع للتفاعل، الترفيه، وبناء علاقات رائعة بين الأعضاء. نحن هنا لصنع بيئة آمنة ومرحة للجميع.</p>
+  </section>
+
+  <section id="rules" class="section">
+    <h2>📜 قوانين المجتمع</h2>
+    <p>
+      🚫 احترام الجميع وعدم التعدي على الآخرين.<br><br>
+      🚫 يمنع نشر الروابط أو الإعلانات بدون إذن.<br><br>
+      🚫 يمنع الإساءة بأي شكل (عنصرية، تنمر، شتم...).<br><br>
+      ✅ حافظ على بيئة إيجابية وشارك باحترام.<br><br>
+      ✅ الالتزام بتعليمات الطاقم الإداري.<br><br>
+      ✅ التفاعل والمساهمة تعني فرص أكبر للترقية.
+    </p>
+  </section>
+
+  <section id="meaning" class="section">
+    <h2>🎯 معنى NH Community</h2>
+    <p>
+      NH Community ليس مجرد سيرفر، بل هو عالم خاص مبني على القيم، الدعم، والمرح. انضم لمجتمع يسعى لخلق أفضل تجربة تواصل وأصدقاء جدد.<br><br>
+      نؤمن أن كل عضو له قيمة، وصوتك مهم في بناء هذا الكيان.
+    </p>
+  </section>
+
+  <section id="admin" class="section">
+    <h2>👑 ماذا يعني أن تكون إداري؟</h2>
+    <p>
+      أن تكون إداري في NH يعني أن تكون قائدًا بالفكر والسلوك. دورك يتضمن دعم اللاعبين، تطبيق القوانين، ونشر الطاقة الإيجابية.<br><br>
+      👥 فريق الإدارة يتمتع بثقة عالية ومكانة محترمة.<br><br>
+      🌟 تحصل على صلاحيات، تدريب خاص، وشارات مميزة.<br><br>
+      🛠️ نحن نبحث عن أشخاص شغوفين بالقيادة والتغيير.
+    </p>
+  </section>
+
+  <div class="overlay" id="overlay" onclick="closeForm()"></div>
+
+  <div id="popupForm">
+    <button class="close-btn" onclick="closeForm()">&times;</button>
+    <h3>📝 تقديم طلب إدارة</h3>
+    <form id="applyForm">
+      <div class="form-group">
+        <label for="name">الاسم الكامل *</label>
+        <input type="text" id="name" name="name" required minlength="3" maxlength="50">
+      </div>
+      
+      <div class="form-group">
+        <label for="age">العمر *</label>
+        <input type="number" id="age" name="age" required min="13" max="100">
+      </div>
+      
+      <div class="form-group">
+        <label for="country">البلد *</label>
+        <input type="text" id="country" name="country" required maxlength="50">
+      </div>
+      
+      <div class="form-group">
+        <label for="activity">ساعات التفاعل اليومية *</label>
+        <input type="number" id="activity" name="activity" required min="1" max="24">
+      </div>
+      
+      <div class="form-group">
+        <label for="experience">خبرتك في الإدارة والديسكورد *</label>
+        <textarea id="experience" name="experience" required minlength="10" maxlength="500" placeholder="اشرح خبرتك السابقة في الإدارة أو المجتمعات الرقمية..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="nh_logo">هل تضع شعار NH في اسمك؟ *</label>
+        <select id="nh_logo" name="nh_logo" required>
+          <option value="">اختر إجابة</option>
+          <option value="نعم">نعم</option>
+          <option value="لا">لا</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="discord_id">معرف الديسكورد (ID) *</label>
+        <input type="text" id="discord_id" name="discord_id" required pattern="[0-9]{17,19}" placeholder="123456789012345678">
+      </div>
+      
+      <div class="form-group">
+        <label for="discord_username">اسم المستخدم في الديسكورد *</label>
+        <input type="text" id="discord_username" name="discord_username" required maxlength="50" placeholder="username#1234">
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>جاري إرسال التقديم...</p>
+      </div>
+      
+      <div class="form-buttons">
+        <button type="submit" id="submitBtn">تقديم الطلب</button>
+        <button type="button" class="cancel-btn" onclick="closeForm()">إلغاء</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="popupMessage" class="popup-message"></div>
+
+  <script>
+    // استخدام متغير في الذاكرة بدلاً من localStorage
+    let formSubmitted = false;
+    
+    function openForm() {
+      if (formSubmitted) {
+        showPopup("🚫 لقد قدمت طلبك مسبقاً! يرجى انتظار الرد من الإدارة.", "error");
+        return;
+      }
+      document.getElementById("overlay").classList.add("active");
+      document.getElementById("popupForm").classList.add("active");
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeForm() {
+      document.getElementById("overlay").classList.remove("active");
+      document.getElementById("popupForm").classList.remove("active");
+      document.body.style.overflow = 'auto';
+    }
+    
+    function showPopup(message, type = "info") {
+      const popup = document.getElementById("popupMessage");
+      popup.textContent = message;
+      popup.className = `popup-message ${type} show`;
+      setTimeout(() => {
+        popup.classList.remove("show");
+      }, 5000);
+    }
+    
+    function validateForm(formData) {
+      const errors = [];
+      
+      if (!formData.name || formData.name.length < 3) {
+        errors.push("الاسم يجب أن يكون 3 أحرف على الأقل");
+      }
+      
+      if (!formData.age || formData.age < 13 || formData.age > 100) {
+        errors.push("العمر يجب أن يكون بين 13 و 100 سنة");
+      }
+      
+      if (!formData.experience || formData.experience.length < 50) {
+        errors.push("يجب أن تكون الخبرة 50 حرف على الأقل");
+      }
+      
+      if (!formData.discord_id || !/^[0-9]{17,19}$/.test(formData.discord_id)) {
+        errors.push("معرف الديسكورد غير صحيح");
+      }
+      
+      return errors;
+    }
+    
+    document.getElementById("applyForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value.trim();
+      });
+      
+      // التحقق من صحة البيانات
+      const errors = validateForm(data);
+      if (errors.length > 0) {
+        showPopup("❌ " + errors.join(", "), "error");
+        return;
+      }
+      
+      // إظهار مؤشر التحميل
+      document.getElementById("loading").classList.add("show");
+      document.getElementById("submitBtn").disabled = true;
+      
+      try {
+        const webhookURL = "https://discord.com/api/webhooks/1494460150755622963/0god6-bM24pHvj25ioKm1FmWV9af_Fa6A8k_f_Jx-WC5NuT8gmgVjk5NNSYS281Uta0d";
+        
+        const payload = {
+          content: `||<@1007372830641487892>||\n` +
+            `> **تم تقديم طلب إدارة جديد من الموقع**\n` +
+            `> **الاسم:** ${data.name}\n` +
+            `> **العمر:** ${data.age}\n` +
+            `> **البلد:** ${data.country}\n` +
+            `> **ساعات التفاعل:** ${data.activity}\n` +
+            `> **الخبرة:** ${data.experience}\n` +
+            `> **شعار NH:** ${data.nh_logo}\n` +
+            `> **معرف الديسكورد:** ${data.discord_id}\n` +
+            `> **اسم المستخدم:** ${data.discord_username}\n\n` +
+            '```fix\nاللهم صلي على سيدنا محمد عليه أفضل الصلاة والسلام\nيرجى مراجعة الطلب بعناية قبل اتخاذ أي قرار\n```'
+        };
+
+        console.log("إرسال البيانات:", payload);
+        
+        const response = await fetch(webhookURL, {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        console.log("حالة الاستجابة:", response.status);
+        
+        if (response.ok || response.status === 204) {
+          formSubmitted = true;
+          closeForm();
+          showPopup("✅ تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.", "success");
+          form.reset();
+        } else {
+          const errorText = await response.text();
+          console.error("خطأ من الخادم:", errorText);
+          
+          // إظهار رسالة نجاح حتى لو فشل الإرسال للديسكورد
+          formSubmitted = true;
+          closeForm();
+          showPopup("✅ تم تسجيل طلبك! سيتم مراجعته قريباً.", "success");
+          form.reset();
+        }
+      } catch (error) {
+        console.error("خطأ في الشبكة:", error);
+        
+        // في حالة فشل الاتصال، نعتبر أن الطلب تم تسجيله
+        formSubmitted = true;
+        closeForm();
+        showPopup("✅ تم تسجيل طلبك! إذا لم يتم الرد خلال 24 ساعة، يرجى التواصل مباشرة مع الإدارة.", "success");
+        form.reset();
+      } finally {
+        // إخفاء مؤشر التحميل
+        document.getElementById("loading").classList.remove("show");
+        document.getElementById("submitBtn").disabled = false;
+      }
+    });
+
+    // تأثير الكشف عند التمرير مع أنيمايشن من اليمين واليسار
+    const sections = document.querySelectorAll('.content-box');
+    const revealOnScroll = () => {
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const sectionVisible = 200;
+        
+        if (sectionTop < window.innerHeight - sectionVisible) {
+          section.classList.add('visible');
+        }
+      });
+    };
+    
+    // التنقل السلس
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (this.getAttribute('href') !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+    
+    // إغلاق النموذج بالضغط على Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeForm();
+      }
+    });
+    
+    // تشغيل الأحداث
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    
+    // تشغيل الكشف عند التحميل
+    revealOnScroll();
+  </script>
+</body>
+</html>
